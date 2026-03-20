@@ -21,7 +21,7 @@ public class CodeFixProvidersLoader : IComponentLoader<CodeFixProvider> {
     }
 
     public ImmutableArray<CodeFixProvider> GetComponents(Project project) {
-        return ComponentsCache.GetOrCreate(project.Name, () => {
+        return ComponentsCache.GetOrCreate(ProjectComponentCacheKeyFactory.Create(project), () => {
             var result = new List<CodeFixProvider>();
             result.AddRange(LoadFromDotRush());
             result.AddRange(LoadFromAssembly(KnownAssemblies.CommonFeaturesAssemblyName));

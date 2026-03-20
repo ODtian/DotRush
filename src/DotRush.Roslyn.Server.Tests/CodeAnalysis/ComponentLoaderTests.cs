@@ -46,7 +46,7 @@ public class DiagnosticAnalyzersLoaderTests : ComponentsLoaderTests<DiagnosticAn
             ComponentsLoader.ComponentsCache.ThrowOnCreation = false;
             var components = loader.GetSuppressors(project);
             Assert.That(components, Has.Length.EqualTo(SuppressorsCount));
-            Assert.That(ComponentsLoader.ComponentsCache.Keys, Does.Contain(project.Name));
+            Assert.That(ComponentsLoader.ComponentsCache.Keys.Any(key => key.StartsWith($"{project.Name}|", StringComparison.Ordinal)), Is.True);
             Assert.That(ComponentsLoader.ComponentsCache.Count, Is.EqualTo(ComponentsCount));
 
             var oldComponentsKeysCount = ComponentsLoader.ComponentsCache.Keys.Count();
@@ -74,7 +74,7 @@ public abstract class ComponentsLoaderTests<TValue> : MultitargetProjectFixture,
             ComponentsLoader.ComponentsCache.ThrowOnCreation = false;
             var components = ComponentsLoader.GetComponents(project);
             Assert.That(components, Has.Length.EqualTo(ComponentsCount));
-            Assert.That(ComponentsLoader.ComponentsCache.Keys, Does.Contain(project.Name));
+            Assert.That(ComponentsLoader.ComponentsCache.Keys.Any(key => key.StartsWith($"{project.Name}|", StringComparison.Ordinal)), Is.True);
             Assert.That(ComponentsLoader.ComponentsCache.Count, Is.EqualTo(ComponentsCount));
 
             var oldComponentsKeysCount = ComponentsLoader.ComponentsCache.Keys.Count();

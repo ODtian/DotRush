@@ -25,7 +25,7 @@ public class CodeRefactoringProvidersLoader : IComponentLoader<CodeRefactoringPr
     }
 
     public ImmutableArray<CodeRefactoringProvider> GetComponents(Project project) {
-        return ComponentsCache.GetOrCreate(project.Name, () => {
+        return ComponentsCache.GetOrCreate(ProjectComponentCacheKeyFactory.Create(project), () => {
             var result = new List<CodeRefactoringProvider>();
             result.AddRange(LoadFromDotRush());
             result.AddRange(LoadFromAssembly(KnownAssemblies.CommonFeaturesAssemblyName));

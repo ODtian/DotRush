@@ -20,7 +20,7 @@ public class DiagnosticAnalyzersLoader : IComponentLoader<DiagnosticAnalyzer> {
     }
 
     public ImmutableArray<DiagnosticAnalyzer> GetComponents(Project project) {
-        return ComponentsCache.GetOrCreate(project.Name, () => {
+        return ComponentsCache.GetOrCreate(ProjectComponentCacheKeyFactory.Create(project), () => {
             var result = new List<DiagnosticAnalyzer>();
             result.AddRange(LoadFromDotRush());
             result.AddRange(LoadFromAssembly(KnownAssemblies.CommonFeaturesAssemblyName));
